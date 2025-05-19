@@ -122,16 +122,18 @@ data class UserData(
 )
 
 data class UserInfo(
-    val dbResults: List<DbResult>?,
-    val licenceDetails: LicenceDetails
+    @SerializedName("dbResults") val dbResults: List<DbResult>?,
+    @SerializedName("licenceDetails") val licenceDetails: LicenceDetails
 )
 
 data class DbResult(
-    val Citizenid: String?,
-    val Name: String?,
-    val Application_IDs: String?,
-    val Document_IDs: String?,
-    val services_name: String?
+    @SerializedName("Citizenid") val Citizenid: String?,
+    @SerializedName("Name") val Name: String?,
+    @SerializedName("Application_IDs") val Application_IDs: String?,
+    @SerializedName("Document_IDs") val Document_IDs: String?,
+    @SerializedName("Total_licenses") val Total_licenses: Int?,
+    @SerializedName("services_name") val services_name: String?
+
 )
 
 data class LicenceDetails(
@@ -161,6 +163,25 @@ data class UserInfoRequest(
     val aadhar_verification_id: String,
     val dob: String
 )
+
+//---------------------get Base64 pdf -----------
+//----------------request---------------------
+data class ViewDocumentRequest(
+    val docSrNo: String
+)
+
+//-----------------response---------------
+data class ViewDocumentResponse(
+    val response: Int,
+    val sys_message: String?,
+    val data: List<ViewDocumentData>?
+)
+
+data class ViewDocumentData(
+    val base64Pdf: String
+)
+
+
 interface ApiService {
     @POST("common/v1/Fetch-elocker")
     @Headers("Content-Type: application/json")
@@ -169,4 +190,10 @@ interface ApiService {
         @Body request: UserInfoRequest
     ): Response<UserDocumentResponse>
 }
+interface  APIservice2 {
 
+    @POST("Verification/GetDsnDetails")
+    suspend fun viewDocument(
+        @Body request: ViewDocumentRequest
+    ): Response<ViewDocumentResponse>
+}

@@ -296,7 +296,6 @@ fun RegistrationScreen(
                 Button(
                     onClick = {
                         viewModel.fetchDocumentsAfterForm(navController)
-                        navController.navigate("documents_screen")
                     },
                     enabled = buttonEnabled,
                     modifier = Modifier

@@ -9,8 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
 
     private const val BASE_URL = "https://devmsewa.psegs.in/m-sewa/api/"
-
-
+    private  const val BASE_URL2 = "https://esewa.punjab.gov.in/common/api/"
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
@@ -30,6 +29,14 @@ object RetrofitInstance {
             .create(ApiService::class.java)
     }
 
+    val api2 :APIservice2 by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL2)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(APIservice2::class.java)
+    }
 
 }
 
